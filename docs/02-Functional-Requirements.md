@@ -1,0 +1,674 @@
+# Functional Requirements
+
+## Version
+
+| Property      | Value                                       |
+| ------------- | ------------------------------------------- |
+| Project       | Warehouse Management System (WMS)           |
+| Version       | 1.0                                         |
+| Document Type | Functional Requirements Specification (FRS) |
+| Author        | Sanjay Kumar                                |
+| Status        | Draft                                       |
+
+---
+
+# 1. Purpose
+
+This document describes all functional requirements of the Warehouse Management System (WMS).
+
+It defines what the system should do, the business rules, user interactions, inputs, outputs, validations, and acceptance criteria.
+
+---
+
+# 2. Modules
+
+The application consists of the following modules.
+
+1. Authentication
+2. Inventory Management
+3. Warehouse Management
+4. Bin Management
+5. Product Image Management
+6. Order Management
+7. Notification Management
+8. Reporting
+
+---
+
+# 3. Authentication Module
+
+## Description
+
+Provides authentication and authorization for all users.
+
+### Features
+
+- User Login
+- JWT Token Generation
+- Token Validation
+- Role Based Access
+- Logout
+
+### User Roles
+
+| Role               | Access                  |
+| ------------------ | ----------------------- |
+| Admin              | Full Access             |
+| Warehouse Manager  | Warehouse Management    |
+| Inventory Manager  | Inventory Management    |
+| Warehouse Employee | Bin & Inventory Updates |
+
+### Acceptance Criteria
+
+- Only authenticated users can access APIs.
+- JWT token expires after configured duration.
+- Unauthorized users receive HTTP 401.
+
+---
+
+# 4. Inventory Management Module
+
+## Description
+
+Manages products and inventory.
+
+---
+
+### Feature 1
+
+## Create Product
+
+### Description
+
+Allows administrator to create a new product.
+
+### Input
+
+- Product Name
+- Description
+- Category
+- Price
+- Warehouse
+- Initial Stock
+
+### Validation
+
+- Product name required
+- Product name unique within warehouse
+- Price > 0
+- Stock >= 0
+
+### Output
+
+Product created successfully.
+
+---
+
+### Feature 2
+
+## Update Product
+
+Allows updating
+
+- Name
+- Price
+- Category
+- Description
+
+---
+
+### Feature 3
+
+## Delete Product
+
+Soft delete product.
+
+Deleted products should not appear in search.
+
+---
+
+### Feature 4
+
+## Search Product
+
+Search using
+
+- Product ID
+- Product Name
+- Category
+- Warehouse
+
+---
+
+### Feature 5
+
+## Get Product Details
+
+Returns
+
+- Product Info
+- Warehouse
+- Bin
+- Stock
+- Image URL
+
+---
+
+# 5. Warehouse Module
+
+## Description
+
+Manages warehouse information.
+
+---
+
+### Feature 1
+
+Create Warehouse
+
+Input
+
+- Warehouse Name
+- City
+- State
+- Capacity
+
+---
+
+### Feature 2
+
+Update Warehouse
+
+Allows updating
+
+- Capacity
+- Address
+- Status
+
+---
+
+### Feature 3
+
+Get Warehouse
+
+Returns
+
+- Capacity
+- Used Capacity
+- Available Capacity
+- Product Count
+
+---
+
+### Business Rules
+
+Warehouse capacity cannot exceed configured limit.
+
+Warehouse cannot be deleted if inventory exists.
+
+---
+
+# 6. Bin Management Module
+
+## Description
+
+Manages storage bins.
+
+---
+
+### Features
+
+Create Bin
+
+Update Bin
+
+Delete Bin
+
+Assign Product
+
+Locate Product
+
+---
+
+### Bin Information
+
+- Bin ID
+- Warehouse ID
+- Aisle
+- Rack
+- Shelf
+- Level
+
+---
+
+### Business Rules
+
+One product occupies one bin.
+
+One bin stores one product.
+
+---
+
+# 7. Inventory Module
+
+## Description
+
+Tracks product quantity.
+
+---
+
+### Features
+
+Add Stock
+
+Remove Stock
+
+Reserve Stock
+
+Release Stock
+
+Transfer Stock
+
+---
+
+### Business Rules
+
+Inventory cannot become negative.
+
+Reserved stock cannot be sold twice.
+
+---
+
+### Acceptance Criteria
+
+Stock updated immediately.
+
+Inventory visible in real time.
+
+---
+
+# 8. Product Image Module
+
+## Description
+
+Stores product images.
+
+---
+
+### Features
+
+Upload Image
+
+Replace Image
+
+Delete Image
+
+Get Image
+
+---
+
+### Validations
+
+JPEG
+
+PNG
+
+Maximum Size = 10 MB
+
+---
+
+### Storage
+
+Amazon S3
+
+---
+
+### Business Rules
+
+Each product has one primary image.
+
+---
+
+# 9. Order Module
+
+## Description
+
+Processes customer orders.
+
+---
+
+### Feature 1
+
+Create Order
+
+Input
+
+Customer ID
+
+Products
+
+Quantity
+
+---
+
+### Workflow
+
+Validate Product
+
+↓
+
+Check Inventory
+
+↓
+
+Reserve Inventory
+
+↓
+
+Create Order
+
+↓
+
+Publish Event
+
+↓
+
+Send Notification
+
+---
+
+### Feature 2
+
+Cancel Order
+
+Release Inventory
+
+Update Status
+
+Publish Event
+
+---
+
+### Feature 3
+
+Track Order
+
+Returns
+
+Order Status
+
+Warehouse
+
+Created Time
+
+---
+
+### Business Rules
+
+Inventory must be reserved before order creation.
+
+Cancelled orders release inventory.
+
+Duplicate orders are prevented.
+
+---
+
+# 10. Notification Module
+
+## Description
+
+Receives SNS events.
+
+---
+
+### Events
+
+Order Created
+
+Order Cancelled
+
+Low Inventory
+
+Daily Report Generated
+
+---
+
+### Notification Types
+
+Email
+
+SMS (Future)
+
+Push Notification (Future)
+
+---
+
+# 11. Reporting Module
+
+## Description
+
+Generates warehouse reports.
+
+---
+
+### Reports
+
+Daily Inventory Report
+
+Warehouse Utilization
+
+Low Inventory
+
+Top Selling Products
+
+---
+
+### Generated By
+
+AWS Lambda
+
+---
+
+### Storage
+
+Amazon S3
+
+---
+
+# 12. User Stories
+
+---
+
+## US-001
+
+As an Inventory Manager,
+
+I want to create a product,
+
+So that inventory can be managed.
+
+---
+
+## US-002
+
+As a Warehouse Employee,
+
+I want to locate products,
+
+So that picking becomes faster.
+
+---
+
+## US-003
+
+As a Customer,
+
+I want to place an order,
+
+So that products can be purchased.
+
+---
+
+## US-004
+
+As an Administrator,
+
+I want to monitor inventory,
+
+So that shortages can be prevented.
+
+---
+
+## US-005
+
+As a Warehouse Manager,
+
+I want reports,
+
+So that warehouse utilization can be improved.
+
+---
+
+# 13. CRUD Matrix
+
+| Module    | Create | Read | Update | Delete |
+| --------- | ------ | ---- | ------ | ------ |
+| Product   | Yes    | Yes  | Yes    | Yes    |
+| Warehouse | Yes    | Yes  | Yes    | Yes    |
+| Bin       | Yes    | Yes  | Yes    | Yes    |
+| Inventory | Yes    | Yes  | Yes    | No     |
+| Orders    | Yes    | Yes  | Yes    | No     |
+| Reports   | No     | Yes  | No     | No     |
+
+---
+
+# 14. Business Rules
+
+BR-001
+
+Product ID must be unique.
+
+---
+
+BR-002
+
+Warehouse capacity cannot exceed configured value.
+
+---
+
+BR-003
+
+Inventory cannot become negative.
+
+---
+
+BR-004
+
+Product images stored in Amazon S3.
+
+---
+
+BR-005
+
+Orders reserve inventory before confirmation.
+
+---
+
+BR-006
+
+Low inventory threshold = 10 units.
+
+---
+
+BR-007
+
+Deleted products are not returned in searches.
+
+---
+
+BR-008
+
+Warehouse cannot be deleted while inventory exists.
+
+---
+
+BR-009
+
+Duplicate order requests must be idempotent.
+
+---
+
+BR-010
+
+Every business operation must be logged.
+
+---
+
+# 15. Functional Flow
+
+```
+User Login
+      │
+      ▼
+Authentication
+      │
+      ▼
+Inventory Operations
+      │
+      ▼
+Warehouse Allocation
+      │
+      ▼
+Inventory Reservation
+      │
+      ▼
+Order Creation
+      │
+      ▼
+SNS Event
+      │
+      ▼
+Notification Service
+      │
+      ▼
+CloudWatch Logs
+```
+
+---
+
+# 16. Module Dependency Diagram
+
+```
+                Authentication
+                      │
+        ┌─────────────┼─────────────┐
+        │             │             │
+        ▼             ▼             ▼
+ Inventory      Warehouse      Order Service
+        │             │             │
+        └──────┬──────┘             │
+               ▼                    ▼
+          Product Image        Notification
+               │                    │
+               ▼                    ▼
+             Amazon S3         Amazon SNS
+                                     │
+                                     ▼
+                               Report Service
+                                     │
+                                     ▼
+                                  AWS Lambda
+```
+
+---
+
+# 17. Success Criteria
+
+- Products managed successfully
+- Inventory updated in real time
+- Orders processed successfully
+- Product images uploaded to S3
+- SNS events published successfully
+- Reports generated automatically
+- APIs respond within acceptable latency
+- System scales for enterprise workloads

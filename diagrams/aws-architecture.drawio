@@ -1,0 +1,57 @@
+                          INTERNET
+                               |
+                               |
+                     Amazon API Gateway
+                               |
+                               |
+              ------------------------------------
+              |         |         |              |
+              ▼         ▼         ▼              ▼
+
+      Inventory    Warehouse    Order     Notification
+       Service      Service     Service      Service
+
+              \        |         |         /
+               \       |         |        /
+                \      |         |       /
+                 -------AWS SDK--------
+                          |
+ ------------------------------------------------------------------
+ |               |               |               |                |
+ ▼               ▼               ▼               ▼                ▼
+DynamoDB      Amazon S3      Amazon SNS     AWS Lambda     CloudWatch
+
+Product       Product Img    Order Event    Report Gen     Logs
+
+Warehouse     Reports        Inventory      Cleanup        Metrics
+
+Orders                       Low Stock
+Bins
+
+
+=====================================================================
+
+IAM ROLES
+
+Inventory Service
+    |
+    |-- DynamoDB
+    |-- S3
+
+Warehouse Service
+    |
+    |-- DynamoDB
+
+Order Service
+    |
+    |-- DynamoDB
+    |-- SNS
+
+Notification Service
+    |
+    |-- SNS
+
+Report Service
+    |
+    |-- Lambda
+    |-- S3

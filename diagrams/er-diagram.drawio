@@ -1,0 +1,52 @@
+                     +----------------------+
+                     |      Warehouse       |
+                     +----------------------+
+                     | warehouseId (PK)     |
+                     | warehouseName        |
+                     | city                 |
+                     | state                |
+                     | capacity             |
+                     +----------+-----------+
+                                |
+                       1        |      N
+                                |
+                                ▼
+                     +----------------------+
+                     |         Bin          |
+                     +----------------------+
+                     | binId (PK)           |
+                     | warehouseId          |
+                     | aisle                |
+                     | rack                 |
+                     | shelf                |
+                     | level                |
+                     | productId            |
+                     +----------+-----------+
+                                |
+                                |
+                                |
+                                ▼
+                     +----------------------+
+                     |       Product        |
+                     +----------------------+
+                     | productId (PK)       |
+                     | warehouseId          |
+                     | name                 |
+                     | category             |
+                     | stock                |
+                     | imageUrl             |
+                     +----------+-----------+
+                                |
+                       1        |      N
+                                |
+                                ▼
+                     +----------------------+
+                     |        Order         |
+                     +----------------------+
+                     | orderId (PK)         |
+                     | customerId           |
+                     | productId            |
+                     | warehouseId          |
+                     | quantity             |
+                     | status               |
+                     +----------------------+

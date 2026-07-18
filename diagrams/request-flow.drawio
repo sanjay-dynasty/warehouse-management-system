@@ -1,0 +1,179 @@
+=================================================
+Create Order Flow
+=================================================
+
+Customer
+
+    |
+
+POST /orders
+
+    |
+
+    ▼
+
+API Gateway
+
+    |
+
+Authenticate
+
+    |
+
+    ▼
+
+Order Service
+
+    |
+
+Validate Request
+
+    |
+
+Call Inventory Service
+
+    |
+
+Reserve Stock
+
+    |
+
+DynamoDB
+
+    |
+
+Success
+
+    |
+
+Save Order
+
+    |
+
+Publish Event
+
+    |
+
+Amazon SNS
+
+    |
+
+Notification Service
+
+    |
+
+CloudWatch
+
+    |
+
+HTTP 201 Created
+
+
+=================================================
+Product Upload Flow
+=================================================
+
+Warehouse Manager
+
+        |
+
+POST /products
+
+        |
+
+API Gateway
+
+        |
+
+Inventory Service
+
+        |
+
+Validate
+
+        |
+
+Save Product
+
+        |
+
+DynamoDB
+
+        |
+
+Return Product ID
+
+
+=================================================
+Image Upload Flow
+=================================================
+
+Client
+
+   |
+
+Upload Image
+
+   |
+
+Inventory Service
+
+   |
+
+AWS SDK
+
+   |
+
+Amazon S3
+
+   |
+
+Image URL
+
+   |
+
+Update Product
+
+   |
+
+DynamoDB
+
+   |
+
+Success
+
+=================================================
+Daily Report Flow
+=================================================
+
+CloudWatch Scheduler
+
+        |
+
+        ▼
+
+AWS Lambda
+
+        |
+
+Read Inventory
+
+        |
+
+DynamoDB
+
+        |
+
+Generate CSV
+
+        |
+
+Amazon S3
+
+        |
+
+SNS
+
+        |
+
+Notification Service

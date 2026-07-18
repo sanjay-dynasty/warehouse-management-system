@@ -1,0 +1,22 @@
+# Draw.io temporary files
+*.drawio.bak
+*.drawio.tmp
+
+# macOS
+.DS_Store
+
+# Windows
+Thumbs.db
+Desktop.ini
+
+# VS Code
+.vscode/
+
+# IntelliJ
+.idea/
+
+# Generated exports
+*.png
+*.jpg
+*.jpeg
+*.pdf

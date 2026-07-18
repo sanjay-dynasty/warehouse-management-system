@@ -1,0 +1,109 @@
+# ==========================
+# IntelliJ IDEA
+# ==========================
+.idea/
+*.iml
+out/
+
+# ==========================
+# VS Code
+# ==========================
+.vscode/
+
+# ==========================
+# Eclipse
+# ==========================
+.project
+.classpath
+.settings/
+
+# ==========================
+# Maven
+# ==========================
+target/
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+pom.xml.next
+release.properties
+
+# ==========================
+# Java
+# ==========================
+*.class
+*.log
+*.jar
+*.war
+*.ear
+
+# ==========================
+# Spring Boot
+# ==========================
+logs/
+*.log
+
+# ==========================
+# Environment
+# ==========================
+.env
+.env.*
+application-local.yml
+application-local.properties
+
+# ==========================
+# AWS
+# ==========================
+.aws/
+cdk.out/
+
+# Local AWS credentials
+credentials
+config
+
+# ==========================
+# Node (for AWS CDK TypeScript)
+# ==========================
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+package-lock.json
+
+# ==========================
+# OS Files
+# ==========================
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# ==========================
+# Temporary Files
+# ==========================
+*.tmp
+*.bak
+*.swp
+
+# ==========================
+# Draw.io
+# ==========================
+*.drawio.bak
+*.drawio.tmp
+
+# ==========================
+# Generated Reports
+# ==========================
+reports/
+coverage/
+
+# ==========================
+# Test
+# ==========================
+surefire-reports/
+failsafe-reports/
+
+# ==========================
+# Misc
+# ==========================
+*.pid
+*.seed
+*.orig
