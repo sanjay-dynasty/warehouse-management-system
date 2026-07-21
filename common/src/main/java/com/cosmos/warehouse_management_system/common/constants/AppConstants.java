@@ -7,5 +7,7 @@ public final class AppConstants {
 
     public static final String SUCCESS = "Success";
     public static final String FAILED = "Failed";
+    public static final String PRODUCTS = "products";
+    public static final String PRODUCT = "Product";
 
 }
