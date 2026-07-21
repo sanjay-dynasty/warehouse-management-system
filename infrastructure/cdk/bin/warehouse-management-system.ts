@@ -6,6 +6,7 @@ import { S3Stack } from '../lib/stacks/s3-stack';
 import { SnsStack } from '../lib/stacks/sns-stack';
 import { LambdaStack } from '../lib/stacks/lambda-stack';
 import { ApiGatewayStack } from '../lib/stacks/api-gateway-stack';
+import { CloudWatchStack } from '../lib/stacks/cloudwatch-stack';
 
 const app = new cdk.App();
 
@@ -20,4 +21,4 @@ new S3Stack(app, "S3Stack", { env });
 new SnsStack(app, "SnsStack", { env });
 new LambdaStack(app, "LambdaStack", { env });
 new ApiGatewayStack(app, "ApiGatewayStack", { env });
-// new CloudWatchStack(app, "CloudWatchStack");
+new CloudWatchStack(app, "CloudWatchStack", { env });
