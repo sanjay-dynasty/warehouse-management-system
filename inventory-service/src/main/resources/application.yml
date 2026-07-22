@@ -8,6 +8,9 @@ spring:
 aws:
   region: ap-south-1
 
+  s3:
+    bucket-name: warehouse-management-system-assets
+
 dynamodb:
   product-table: wms-products
 

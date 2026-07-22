@@ -1,6 +1,7 @@
 package com.cosmos.warehouse_management_system.inventory.service;
 
 import com.cosmos.warehouse_management_system.common.constants.AppConstants;
+import com.cosmos.warehouse_management_system.common.exception.BadRequestException;
 import com.cosmos.warehouse_management_system.common.exception.ResourceNotFoundException;
 import com.cosmos.warehouse_management_system.inventory.dto.CreateProductRequest;
 import com.cosmos.warehouse_management_system.inventory.dto.ProductResponse;
@@ -11,6 +12,7 @@ import com.cosmos.warehouse_management_system.inventory.repository.ProductReposi
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -22,6 +24,7 @@ public class ProductServiceImpl implements ProductService {
 
     private final ProductRepository productRepository;
     private final ProductMapper productMapper;
+    private final ImageStorageService imageStorageService;
 
     @Override
     public ProductResponse createProduct(CreateProductRequest request) {
@@ -114,5 +117,57 @@ public class ProductServiceImpl implements ProductService {
         productRepository.delete(productId);
 
         log.info("Product deleted successfully");
+    }
+
+    @Override
+    public ProductResponse uploadProductImage(String productId, MultipartFile file) {
+
+        Product product = productRepository.findById(productId)
+                .orElseThrow(() -> new ResourceNotFoundException(
+                        AppConstants.PRODUCT,
+                        "productId",
+                        productId));
+
+        String imageUrl = imageStorageService.uploadImage(file);
+
+        product.setImageUrl(imageUrl);
+        product.setUpdatedAt(LocalDateTime.now());
+
+        productRepository.update(product);
+
+        return productMapper.toResponse(product);
+    }
+
+    @Override
+    public ProductResponse deleteProductImage(String productId) {
+
+        log.info("Deleting image for product {}", productId);
+
+        Product product = productRepository.findById(productId)
+                .orElseThrow(() -> new ResourceNotFoundException(
+                        AppConstants.PRODUCT,
+                        "productId",
+                        productId));
+
+        if (product.getImageUrl() == null ||
+                product.getImageUrl().isBlank()) {
+
+            throw new BadRequestException(
+                    "Product does not have an image.");
+        }
+
+        String objectKey = imageStorageService.extractObjectKey(
+                product.getImageUrl());
+
+        imageStorageService.deleteImage(objectKey);
+
+        product.setImageUrl(null);
+        product.setUpdatedAt(LocalDateTime.now());
+
+        productRepository.update(product);
+
+        log.info("Image deleted successfully for product {}", productId);
+
+        return productMapper.toResponse(product);
     }
 }

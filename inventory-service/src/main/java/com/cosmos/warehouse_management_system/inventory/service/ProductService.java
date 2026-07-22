@@ -6,6 +6,8 @@ import com.cosmos.warehouse_management_system.inventory.dto.UpdateProductRequest
 
 import java.util.List;
 
+import org.springframework.web.multipart.MultipartFile;
+
 public interface ProductService {
 
     ProductResponse createProduct(CreateProductRequest request);
@@ -17,4 +19,8 @@ public interface ProductService {
     ProductResponse updateProduct(String productId, UpdateProductRequest request);
 
     void deleteProduct(String productId);
+
+    ProductResponse uploadProductImage(String productId, MultipartFile file);
+
+    ProductResponse deleteProductImage(String productId);
 }

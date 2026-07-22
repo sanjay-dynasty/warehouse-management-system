@@ -13,8 +13,10 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -95,5 +97,34 @@ public class ProductController {
                                 ApiResponse.success(
                                                 "Product deleted successfully",
                                                 null));
+        }
+
+        @PostMapping(value = "/{productId}/image", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+        public ResponseEntity<ApiResponse<ProductResponse>> uploadImage(
+
+                        @PathVariable String productId,
+
+                        @RequestPart MultipartFile file) {
+
+                ProductResponse response = productService.uploadProductImage(
+                                productId,
+                                file);
+
+                return ResponseEntity.ok(
+                                ApiResponse.success(
+                                                "Image uploaded successfully",
+                                                response));
+        }
+
+        @DeleteMapping("/{productId}/image")
+        public ResponseEntity<ApiResponse<ProductResponse>> deleteProductImage(
+                        @PathVariable String productId) {
+
+                ProductResponse response = productService.deleteProductImage(productId);
+
+                return ResponseEntity.ok(
+                                ApiResponse.success(
+                                                "Product image deleted successfully",
+                                                response));
         }
 }
