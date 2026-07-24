@@ -21,6 +21,19 @@ export class DynamoDbStack extends cdk.Stack {
             removalPolicy: cdk.RemovalPolicy.DESTROY
         });
 
+        productTable.addGlobalSecondaryIndex({
+            indexName: "category-createdAt-index",
+            partitionKey: {
+                name: "category",
+                type: dynamodb.AttributeType.STRING
+            },
+            sortKey: {
+                name: "createdAt",
+                type: dynamodb.AttributeType.STRING
+            },
+            projectionType: dynamodb.ProjectionType.ALL
+        });
+
         new cdk.CfnOutput(this, "ProductTableName", {
             value: productTable.tableName,
             description: "Product Table Name"
@@ -43,6 +56,19 @@ export class DynamoDbStack extends cdk.Stack {
             tableClass: dynamodb.TableClass.STANDARD,
             billingMode: dynamodb.BillingMode.PAY_PER_REQUEST,
             removalPolicy: cdk.RemovalPolicy.DESTROY
+        });
+
+        warehouseTable.addGlobalSecondaryIndex({
+            indexName: "city-status-index",
+            partitionKey: {
+                name: "city",
+                type: dynamodb.AttributeType.STRING
+            },
+            sortKey: {
+                name: "status",
+                type: dynamodb.AttributeType.STRING
+            },
+            projectionType: dynamodb.ProjectionType.ALL
         });
 
         new cdk.CfnOutput(this, "WarehouseTableName", {
@@ -69,12 +95,25 @@ export class DynamoDbStack extends cdk.Stack {
             removalPolicy: cdk.RemovalPolicy.DESTROY
         });
 
+        inventoryTable.addGlobalSecondaryIndex({
+            indexName: "product-warehouse-index",
+            partitionKey: {
+                name: "productId",
+                type: dynamodb.AttributeType.STRING
+            },
+            sortKey: {
+                name: "warehouseId",
+                type: dynamodb.AttributeType.STRING
+            },
+            projectionType: dynamodb.ProjectionType.ALL
+        });
+
         new cdk.CfnOutput(this, "InventoryTableName", {
             value: inventoryTable.tableName,
             description: "Inventory Table Name"
         });
 
-        new cdk.CfnOutput(this, "ventoryTableArn", {
+        new cdk.CfnOutput(this, "IventoryTableArn", {
             value: inventoryTable.tableArn,
             description: "Inventory Table ARN"
         });
@@ -91,6 +130,32 @@ export class DynamoDbStack extends cdk.Stack {
             tableClass: dynamodb.TableClass.STANDARD,
             billingMode: dynamodb.BillingMode.PAY_PER_REQUEST,
             removalPolicy: cdk.RemovalPolicy.DESTROY
+        });
+
+        orderTable.addGlobalSecondaryIndex({
+            indexName: "customer-createdAt-index",
+            partitionKey: {
+                name: "customerId",
+                type: dynamodb.AttributeType.STRING
+            },
+            sortKey: {
+                name: "createdAt",
+                type: dynamodb.AttributeType.STRING
+            },
+            projectionType: dynamodb.ProjectionType.ALL
+        });
+
+        orderTable.addGlobalSecondaryIndex({
+            indexName: "warehouse-status-index",
+            partitionKey: {
+                name: "warehouseId",
+                type: dynamodb.AttributeType.STRING
+            },
+            sortKey: {
+                name: "status",
+                type: dynamodb.AttributeType.STRING
+            },
+            projectionType: dynamodb.ProjectionType.ALL
         });
 
         new cdk.CfnOutput(this, "OrderTableName", {

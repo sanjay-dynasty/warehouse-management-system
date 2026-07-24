@@ -10,8 +10,12 @@ public final class AppConstants {
     public static final String PRODUCTS = "products";
     public static final String PRODUCT = "Product";
     public static final String PRODUCT_IMAGES = "product-images";
+
+    public static final String WAREHOUSE = "Warehouse";
+    public static final String INVENTORY = "Inventory";
+
     public static final String PRODUCT_TABLE_NAME = "wms-products";
     public static final String WAREHOUSE_TABLE_NAME = "wms-warehouses";
-    public static final String WAREHOUSE = "Warehouse";
+    public static final String INVENTORY_TABLE_NAME = "wms-inventory";
 
 }
